@@ -1,39 +1,48 @@
-interface Vehicle {
+interface VehicleWithEngine {
     void startEngine();
-    void kickPedal();
 }
 
-class Bike implements Vehicle {
-    @Override
-    public void startEngine() {
-        throw new UnsupportedOperationException("A bike doesn't have a engine.");
-    }
+interface VehicleWithPedals {
+    void kickPedals();
+}
 
+class Bike implements VehicleWithPedals {
     @Override
-    public void kickPedal() {
+    public void kickPedals() {
         System.out.println("A bike moves with pedals");
     }
 }
 
-class Scooter implements Vehicle {
+class Scooter implements VehicleWithEngine {
     @Override
     public void startEngine() {
-        System.out.println("The scooter starts the engine");
+        System.out.println("The scooter starts the engine.");
+    }
+}
+
+class EBike implements VehicleWithEngine, VehicleWithPedals {
+    @Override
+    public void startEngine() {
+        System.out.println("The e-bike starts the engine");
     }
 
     @Override
-    public void kickPedal() {
-        throw new UnsupportedOperationException("Scooter doesn't have pedals");
+    public void kickPedals() {
+        System.out.println("A e-bikke moves with pedals.");
     }
 }
 
-class Main {
+public class Main {
     public static void main(String[] args) {
-        Vehicle vehicle1 = new Scooter();
+        VehicleWithEngine vehicle1 = new Scooter();
         vehicle1.startEngine();
-        vehicle1.kickPedal(); 
 
-        Vehicle vehicle2 = new Bike();
-        vehicle2.kickPedal();
+        VehicleWithPedals vehicle2 = new Bike();
+        vehicle2.kickPedals();
+
+        EBike vehicle3 = new EBike();
+        vehicle3.startEngine();
+        vehicle3.kickPedals();
     }
 }
+
